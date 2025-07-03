@@ -1,4 +1,4 @@
-import { UseAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import { getDaysUntilNextCharge, subscriptions } from "@/utils";
 
 export default function SubscriptionDisplay(props) {

@@ -2,10 +2,10 @@
 
 import { usePathname } from "next/navigation"
 import Link from "next/link"
-import { UseAuth } from "@/context/AuthContext"
+import { useAuth } from "@/context/AuthContext"
 
 export default function GoTo() {
-    const { currentUser, logout } = UseAuth()
+    const { currentUser, logout } = useAuth()
 
     const isAuthenticated = !!currentUser
 

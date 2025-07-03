@@ -3,17 +3,17 @@
 import { auth, db } from "@/firebase"
 import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
 import { createContext, useContext, useState, useEffect } from "react"
-import { doc, setDoc } from "firebase/firestore"
+import { doc, getDoc, setDoc } from "firebase/firestore"
 import { subscriptions } from "@/utils"
 
 const AuthContext = createContext()
 
-export function UseAuth() {
+export function useAuth() {
     return useContext(AuthContext)
 }
 
 export function AuthProvider(props) {
-    const { childern } = props
+    const { children } = props
 
     const [currentUser, setCurrentUser] = useState(null)
     const [userData, setUserData] = useState(null)
@@ -30,7 +30,7 @@ export function AuthProvider(props) {
     function logout () {
         setCurrentUser(null)
         setUserData(null)
-        signOut(auth)
+        return signOut(auth)
     }
 
     async function saveToFirebase(data) {
@@ -59,6 +59,7 @@ export function AuthProvider(props) {
     async function handleDeleteSubscription(index) {
         //delete the entry at that index
         const newSubscriptions = userData.subscriptions.filter((val, valIndex) => {
+            return valIndex !== index
         })
         setUserData({ subscriptions: newSubscriptions})
 
@@ -68,7 +69,6 @@ export function AuthProvider(props) {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async user => {
             try {
-                setLoading(true)
                 setCurrentUser(user)
 
                 if(!user) {return}
@@ -86,7 +86,7 @@ export function AuthProvider(props) {
 
                 if(docSnap.exists()) {
                     //data was found
-                    console.log("Found Dara")
+                    console.log("Found user data")
                     firebaseData = docSnap.data()
                 } else {
                     //data was not found
@@ -106,7 +106,7 @@ export function AuthProvider(props) {
 
     return (
         <AuthContext.Provider value={value}>
-            {childern}
+            {children}
         </AuthContext.Provider>
     )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { UseAuth } from "@/context/AuthContext"
+import { useAuth } from "@/context/AuthContext"
 import { useState } from "react"
 
 export default function SubscriptionForm(props) {
@@ -9,7 +9,6 @@ export default function SubscriptionForm(props) {
 
     function handleFormSubmit(e) {
         e.preventDefault() //prevents the random behavior of reloading the webpage
-
         handleAddSubscription(formData)
         handleResetForm()
         closeInput()

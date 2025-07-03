@@ -1,5 +1,6 @@
 'use client'
 
+import { useAuth } from "@/context/AuthContext"
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 
@@ -11,14 +12,14 @@ export default function Login() {
     const [password, setPassword] = useState('')
     const [isRegistration, setIsRegistration] = useState(isReg)
     const [error, setError] = useState(null)
-    const [authenticating, setAuthentication] = useState(false)
+    const [authenticating, setAuthenticating] = useState(false)
     const { signup, login } = useAuth()
 
     async function handleAuthenticate() {
         if (!email || !email.includes('@') || password.length < 6 || authenticating)
         { return }
         setError(null)
-        setAuthentication(true)
+        setAuthenticating(true)
         try {
             if (isRegistration) {
                 //register a user
@@ -31,7 +32,7 @@ export default function Login() {
             console.log(err.message)
             setError(err.message)
         } finally {
-            setAuthentication(false)
+            setAuthenticating(false)
         }
     }
 
@@ -45,7 +46,7 @@ export default function Login() {
             )}
             <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" type="email"/>
             <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password"/>
-            <button onClick={handleAuthenticate} disabled={authenticating}>{authenticating ? 'Submitting...' : Submit}</button>
+            <button onClick={handleAuthenticate} disabled={authenticating}>{authenticating ? 'Submitting...' : 'Submit'}</button>
             <div className="full-line"/>
             <div>
                 <p>{isRegistration ? 'Already have an account?' : 'Already have an account?'}</p>

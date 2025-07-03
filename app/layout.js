@@ -1,6 +1,6 @@
 import "./globals.css";
-import './fanta.css'
-import Head from "./Head"
+import "./fanta.css";
+import Head from "./Head";
 import Link from "next/link";
 import GoTo from "@/components/GoTo";
 import { AuthProvider } from "@/context/AuthContext";
@@ -11,13 +11,11 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-
   const header = (
     <header>
       <div>
         <Link href={'/'}>
         <h1 className="text-gradient">Expenny</h1>
-        
         </Link>
         <p>The Subscription Tracker</p>
       </div>
